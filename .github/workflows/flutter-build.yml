@@ -141,7 +141,7 @@ jobs:
           fi
         shell: bash
 
-      - name: Build rustdesk
+      - name: Build HBDESK
         run: |
           Invoke-WebRequest -Uri https://github.com/rustdesk-org/rdev/releases/download/usbmmidd_v2/usbmmidd_v2.zip -OutFile usbmmidd_v2.zip
           Expand-Archive usbmmidd_v2.zip -DestinationPath .
