@@ -23,7 +23,7 @@
       ]
     },
     {
-      "name": "hbdesk",
+      "name": "rustdesk",
       "buildsystem": "simple",
       "build-commands": [
         "bsdtar -zxvf rustdesk.deb",

@@ -148,8 +148,8 @@ jobs:
           python3 .\build.py --portable --hwcodec --flutter --vram --skip-portable-pack
           Remove-Item -Path usbmmidd_v2\Win32 -Recurse
           Remove-Item -Path "usbmmidd_v2\deviceinstaller64.exe", "usbmmidd_v2\deviceinstaller.exe", "usbmmidd_v2\usbmmidd.bat"
-          mv ./flutter/build/windows/x64/runner/Release ./hbdesk
-          mv -Force .\usbmmidd_v2 ./hbdesk
+          mv ./flutter/build/windows/x64/runner/Release ./rustdesk
+          mv -Force .\usbmmidd_v2 ./rustdesk
 
       - name: find Runner.res
         # Windows: find Runner.res (compiled from ./flutter/windows/runner/Runner.rc), copy to ./Runner.res
@@ -172,7 +172,7 @@ jobs:
         if: ${{ inputs.upload-artifact }}
         with:
           name: topmostwindow-artifacts
-          path: "./hbdesk"
+          path: "./rustdesk"
 
       - name: Upload unsigned
         if: env.UPLOAD_ARTIFACT == 'true'
@@ -186,7 +186,7 @@ jobs:
         shell: bash
         run: |
           pip3 install requests argparse
-          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 res/job.py sign_files ./hbdesk/
+          BASE_URL=${{ secrets.SIGN_BASE_URL }} SECRET_KEY=${{ secrets.SIGN_SECRET_KEY }} python3 res/job.py sign_files ./rustdesk/
 
       - name: Build self-extracted executable
         shell: bash
@@ -195,10 +195,10 @@ jobs:
           sed -i '/dpiAware/d' res/manifest.xml
           pushd ./libs/portable
           pip3 install -r requirements.txt
-          python3 ./generate.py -f ../../hbdesk/ -o . -e ../../hbdesk/hbdesk.exe
+          python3 ./generate.py -f ../../rustdesk/ -o . -e ../../rustdesk/hbdesk.exe
           popd
           mkdir -p ./SignOutput
-          mv ./target/release/hbdesk-portable-packer.exe ./SignOutput/hbdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.exe
+          mv ./target/release/rustdesk-portable-packer.exe ./SignOutput/rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.exe
 
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v2
@@ -207,11 +207,11 @@ jobs:
         if: env.UPLOAD_ARTIFACT == 'true'
         run: |
           pushd ./res/msi
-          python preprocess.py --arp -d ../../hbdesk
+          python preprocess.py --arp -d ../../rustdesk
           nuget restore msi.sln
           msbuild msi.sln -p:Configuration=Release -p:Platform=x64 /p:TargetVersion=Windows10
-          mv ./Package/bin/x64/Release/en-us/Package.msi ../../SignOutput/hbdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.msi
-          sha256sum ../../SignOutput/hbdesk-*.msi
+          mv ./Package/bin/x64/Release/en-us/Package.msi ../../SignOutput/rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.msi
+          sha256sum ../../SignOutput/rustdesk-*.msi
 
       - name: Sign rustdesk self-extracted file
         if: env.UPLOAD_ARTIFACT == 'true' && env.SIGN_BASE_URL != ''
@@ -226,8 +226,8 @@ jobs:
           prerelease: true
           tag_name: ${{ env.TAG_NAME }}
           files: |
-            ./SignOutput/hbdesk-*.msi
-            ./SignOutput/hbdesk-*.exe
+            ./SignOutput/rustdesk-*.msi
+            ./SignOutput/rustdesk-*.exe
 
   # The fallback for the flutter version, we use Sciter for 32bit Windows.
   build-for-windows-sciter:
@@ -353,7 +353,7 @@ jobs:
           python3 ./generate.py -f ../../Release/ -o . -e ../../Release/hbdesk.exe
           popd
           mkdir -p ./SignOutput
-          mv ./target/release/hbdesk-portable-packer.exe ./SignOutput/hbdesk-${{ env.VERSION }}-${{ matrix.job.arch }}-sciter.exe
+          mv ./target/release/rustdesk-portable-packer.exe ./SignOutput/hbdesk-${{ env.VERSION }}-${{ matrix.job.arch }}-sciter.exe
 
       - name: Sign rustdesk self-extracted file
         if: env.UPLOAD_ARTIFACT == 'true' && env.SIGN_BASE_URL != ''

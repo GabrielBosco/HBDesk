@@ -3358,17 +3358,18 @@ Widget loadPowered(BuildContext context) {
     cursor: SystemMouseCursors.click,
     child: GestureDetector(
       onTap: () {
-        launchUrl(Uri.parse('https://rustdesk.com'));
+        launchUrl(Uri.parse('https://hbticorporativo.com.br'));
       },
       child: Opacity(
           opacity: 0.5,
           child: Text(
-            translate("powered_by_me"),
+            //translate("powered_by_me"),
+			"HB Técnologia Corporativa",
             overflow: TextOverflow.clip,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
-                ?.copyWith(fontSize: 9, decoration: TextDecoration.underline),
+                ?.copyWith(fontSize: 14, decoration: TextDecoration.underline),
           )),
     ),
   ).marginOnly(top: 6);

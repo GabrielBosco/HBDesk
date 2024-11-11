@@ -46,7 +46,7 @@ def make_parser():
         "-d",
         "--dist-dir",
         type=str,
-        default="../../hbdesk",
+        default="../../rustdesk",
         help="The dist direcotry to install.",
     )
     parser.add_argument(
@@ -83,7 +83,7 @@ def make_parser():
         "-m",
         "--manufacturer",
         type=str,
-        default="PURSLANE",
+        default="HB T.I CORP",
         help="The app manufacturer.",
     )
     return parser
@@ -139,7 +139,7 @@ def insert_components_between_tags(lines, index_start, app_name, dist_dir):
 
 def gen_auto_component(app_name, dist_dir):
     return gen_content_between_tags(
-        "Package/Components/HBDesk.wxs",
+        "Package/Components/RustDesk.wxs",
         "<!--$AutoComonentStart$-->",
         "<!--$AutoComponentEnd$-->",
         lambda lines, index_start: insert_components_between_tags(
@@ -183,7 +183,7 @@ def replace_app_name_in_langs(app_name):
         with open(file_path, "r", encoding="utf-8") as f:
             lines = f.readlines()
         for i, line in enumerate(lines):
-            lines[i] = line.replace("HBDesk", app_name)
+            lines[i] = line.replace("RustDesk", app_name)
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(lines)
 
@@ -477,13 +477,13 @@ def init_global_vars(dist_dir, app_name, args):
 
 
 def update_license_file(app_name):
-    if app_name == "HBDesk":
+    if app_name == "RustDesk":
         return
     license_file = Path(sys.argv[0]).parent.joinpath("Package/License.rtf")
     with open(license_file, "r", encoding="utf-8") as f:
         license_content = f.read()
     license_content = license_content.replace("website hbticorporativo.com.br and other ", "")
-    license_content = license_content.replace("HBDesk", app_name)
+    license_content = license_content.replace("RustDesk", app_name)
     license_content = re.sub("HB T.I Corp", app_name, license_content, flags=re.IGNORECASE)
     with open(license_file, "w", encoding="utf-8") as f:
         f.write(license_content)
@@ -523,7 +523,7 @@ if __name__ == "__main__":
     if not gen_pre_vars(args, dist_dir):
         sys.exit(-1)
 
-    if app_name != "HBDesk":
+    if app_name != "RustDesk":
         replace_component_guids_in_wxs()
 
     if not gen_upgrade_info():

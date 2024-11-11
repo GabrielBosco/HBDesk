@@ -11,7 +11,7 @@
 ####################################################################
 # File Info
 
-!define PRODUCT_NAME "HBDesk"
+!define PRODUCT_NAME "RustDesk"
 !define PRODUCT_DESCRIPTION "Installer for ${PRODUCT_NAME}"
 !define COPYRIGHT "Copyright © 2024"
 !define VERSION "1.3.3"
@@ -27,7 +27,7 @@ VIAddVersionKey "FileVersion" "${VERSION}.0"
 # Installer Attributes
 
 Name "${PRODUCT_NAME}"
-Outfile "hbdesk-${VERSION}-setup.exe"
+Outfile "rustdesk-${VERSION}-setup.exe"
 Caption "Setup - ${PRODUCT_NAME}"
 BrandingText "${PRODUCT_NAME}"
 
