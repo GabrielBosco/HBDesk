@@ -3364,7 +3364,7 @@ Widget loadPowered(BuildContext context) {
           opacity: 0.5,
           child: Text(
             //translate("powered_by_me"),
-			"HB Técnologia Corporativa",
+			"HB Tecnologia Corporativa",
             overflow: TextOverflow.clip,
             style: Theme.of(context)
                 .textTheme
