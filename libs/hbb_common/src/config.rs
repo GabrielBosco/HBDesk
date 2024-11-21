@@ -57,7 +57,7 @@ lazy_static::lazy_static! {
     static ref ONLINE: Mutex<HashMap<String, i64>> = Default::default();
     pub static ref PROD_RENDEZVOUS_SERVER: RwLock<String> = RwLock::new(match option_env!("RENDEZVOUS_SERVER") {
         Some(key) if !key.is_empty() => key,
-        _ => "helpdesk.hbinformatica.com.br",
+        _ => "helpdesk.hbticorporativo.com.br",
     }.to_owned());
     pub static ref EXE_RENDEZVOUS_SERVER: RwLock<String> = Default::default();
     pub static ref APP_NAME: RwLock<String> = RwLock::new("HBDesk".to_owned());
@@ -100,7 +100,7 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["helpdesk.hbinformatica.com.br"];
+pub const RENDEZVOUS_SERVERS: &[&str] = &["helpdesk.hbticorporativo.com.br"];
 pub const PUBLIC_RS_PUB_KEY: &str = "1A22ft5dTH37mXMw1+T4qCvRZm9dDrmAAKOWbyvILu4=";
 
 pub const RS_PUB_KEY: &str = match option_env!("RS_PUB_KEY") {
